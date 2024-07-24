@@ -1184,15 +1184,20 @@ class ModelAdminChecks(BaseModelAdminChecks):
                     )
                 ]
             else:
-                if not isinstance(field, (models.DateField, models.DateTimeField)):
-                    return must_be(
-                        "a DateField or DateTimeField",
-                        option="date_hierarchy",
-                        obj=obj,
-                        id="admin.E128",
-                    )
-                else:
+                supported_fields = (models.DateField, models.DateTimeField)
+
+                if isinstance(field, supported_fields) or (
+                    isinstance(field, models.GeneratedField)
+                    and isinstance(field.output_field, supported_fields)
+                ):
                     return []
+
+                return must_be(
+                    "a DateField or DateTimeField",
+                    option="date_hierarchy",
+                    obj=obj,
+                    id="admin.E128",
+                )
 
     def _check_actions(self, obj):
         errors = []
