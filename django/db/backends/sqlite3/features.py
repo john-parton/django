@@ -38,7 +38,6 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     supports_any_value = True
     order_by_nulls_first = True
     supports_json_absent_on_null = False
-    supports_json_array_concat = False
     supports_json_field_contains = False
     supports_update_conflicts = True
     supports_update_conflicts_with_target = True
